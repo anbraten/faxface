@@ -1,0 +1,30 @@
+#! /bin/sh
+
+# check initial setup
+if [ ! -f /fax/setup_done ]; then
+  echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+
+  apk add --no-cache \
+    hylafaxplus \
+    iaxmodem \
+    npm \
+    nodejs
+
+  cd /app
+  npm install
+
+  echo "" > /fax/setup_done
+fi
+
+# Double check that uucp can rw the direcotry.
+# Otherwise services as faxq wont start but we wont get notified about that ... ;(
+chown -R uucp:uucp /var/spool/hylafaxplus
+chown -R uucp:uucp /fax
+
+cd /app
+
+if [ -f /fax/dev ]; then
+  npm run watch
+else
+  npm run start
+fi

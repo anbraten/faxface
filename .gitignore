@@ -1,0 +1,9 @@
+app/config/production.json
+app/log/
+app/node_modules/
+app/db.json
+conf/
+fax/
+
+exec
+recreate

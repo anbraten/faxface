@@ -1,0 +1,15 @@
+#! /bin/sh
+FAX_DIR="/fax"
+FAX_INFO="/usr/sbin/faxinfo"
+SED="/bin/sed"
+ECHO="/bin/echo"
+DATE="/bin/date"
+
+FAX=$DEVICE"-"$($DATE +%Y-%m-%d-%H-%M-%S)
+RECEIVER=$($SED -n 's/^FAXNumber:\s.//p' "etc/config."$DEVICE)
+
+#$FAX_INFO -c "," $FILE > $FAX_DIR/$FAX.txt
+$ECHO -n $FILE > $FAX_DIR/$FAX.txt
+$ECHO -n ","$DEVICE >> $FAX_DIR/$FAX.txt
+$ECHO -n ","$RECEIVER >> $FAX_DIR/$FAX.txt
+

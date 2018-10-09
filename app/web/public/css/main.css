@@ -1,0 +1,11 @@
+div.loading {
+  display: none;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.table-hover tbody tr {
+  cursor: pointer;
+}

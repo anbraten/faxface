@@ -1,0 +1,61 @@
+{
+  "name": "faxface",
+  "version": "1.0.0",
+  "description": "Webinterface to view received faxes and send new ones.",
+  "main": "index.js",
+  "scripts": {
+    "start": "NODE_ENV=production node index.js",
+    "clean": "rm -f web/public/js/*.js",
+    "build": "npm run clean && webpack",
+    "watch": "NODE_ENV=development webpack --ext js,json --watch --progress & nodemon --watch index.js --watch src/ --watch config/ index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Garogat/faxface.git"
+  },
+  "keywords": [
+    "fax",
+    "asterisk",
+    "node",
+    "js",
+    "nodejs",
+    "webinterface"
+  ],
+  "author": "Anton Bracke <anton@ju60.de>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Garogat/faxface/issues"
+  },
+  "homepage": "https://github.com/Garogat/faxface#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "chokidar": "^2.0.4",
+    "config": "^2.0.1",
+    "express": "^4.16.3",
+    "imap-simple": "^4.1.0",
+    "jsonwebtoken": "^8.3.0",
+    "lowdb": "^1.0.0",
+    "nodemailer": "^4.6.8",
+    "winston": "^3.1.0"
+  },
+  "devDependencies": {
+    "axios": "^0.18.0",
+    "css-loader": "^1.0.0",
+    "jwt-decode": "^2.2.0",
+    "less": "^3.8.1",
+    "nodemon": "^1.18.4",
+    "style-loader": "^0.23.0",
+    "vue": "^2.5.17",
+    "vue-axios": "^2.1.3",
+    "vue-html-loader": "^1.2.4",
+    "vue-loader": "^15.4.1",
+    "vue-router": "^3.0.1",
+    "vue-template-compiler": "^2.5.17",
+    "vue2-dropzone": "^3.5.2",
+    "vuex": "^3.0.1",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0"
+  }
+}

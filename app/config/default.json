@@ -1,0 +1,43 @@
+{
+  "hylafax": {
+    "folder": "/var/spool/hylafaxplus",
+    "doneq": "/doneq",
+    "recvq": "/recvq",
+    "faxinfo": "/usr/sbin/faxinfo",
+    "tiff2pdf": "/usr/bin/tiff2pdf",
+    "hylafax": "/usr/sbin/hylafax",
+    "faxgetty": "/usr/sbin/faxgetty",
+    "iaxmodem": "/usr/sbin/iaxmodem",
+    "sendfax": "/usr/bin/sendfax"
+  },
+  "fax": {
+    "folder": "/fax"
+  },
+  "web": {
+    "port": 80,
+    "public_url": "localhost",
+    "jwt_secret": "keepmesecret"
+  },
+  "mail": {
+    "smtp": {
+      "host": "mail.domain.tld",
+      "port": 587,
+      "secure": false,
+      "username": "",
+      "password": ""
+    },
+    "from": "Fax <fax@domain.tld>"
+  },
+  "database": {
+    "file": "db.json"
+  },
+  "logger": {
+    "files": {
+      "combined": "log/faxface",
+      "error": "log/error",
+      "fatal": "log/error",
+      "modems": "log/modems",
+      "hylafax": "log/hylafax"
+    }
+  }
+}
