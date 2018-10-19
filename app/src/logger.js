@@ -10,8 +10,17 @@ function init(config) {
     level: 'info',
     format: winston.format.simple(),
     transports: [
-      new winston.transports.File({ filename: config.get('logger.files.error'), level: 'error' }), // - Write all logs error (and below) to `error.log`.
-      new winston.transports.File({ filename: config.get('logger.files.combined'), format: winston.format.json(), handleExceptions: true }) // - Write to all logs with level `info` and below to `combined.log`
+      new winston.transports.File({ filename: config.get('logger.files.error'), level: 'error' }),
+      new winston.transports.File({
+        filename: config.get('logger.files.combined'),
+        format: winston.format.combine(
+            winston.format.timestamp({
+              format: 'DD.MM.YYYY HH:mm'
+            }),
+            winston.format.json()
+        ),
+        handleExceptions: true
+      })
     ],
     handleExceptions: true,
     exceptionHandlers: [

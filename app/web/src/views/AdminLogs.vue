@@ -7,6 +7,7 @@
             <table class="table table-hover table-filters">
               <thead>
                 <tr>
+                  <th>Datum</th>
                   <th>Module</th>
                   <th>Level</th>
                   <th>Nachricht</th>
@@ -15,6 +16,7 @@
               <tbody>
                 <tr v-for="log in logs">
                   <template v-if="category === null || category == log.module">
+                    <td>{{ log.timestamp }}</td>
                     <td>{{ log.module || 'default' }}</td>
                     <td>{{ log.level }}</td>
                     <td v-html="prettyHTML(log.message)"></td>

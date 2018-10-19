@@ -83,8 +83,6 @@ function auth() {
   var router = express.Router()
 
   router.post('/login', (req, res) => {
-    logger.info('user', req.body)
-
     var user = validateEmail(req.body.username)
       ? database.get('users').find({ email: req.body.username }).value()
       : database.get('users').find({ username: req.body.username }).value()
