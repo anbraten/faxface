@@ -7,7 +7,7 @@ module.exports = {
 }
 
 function init(config, logger) {
-  const db = low(new FileSync(config.get('database.file')))
+  const db = low(new FileSync(config.get('fax.folder') + config.get('database.file')))
 
   // Set some defaults (required if your JSON file is empty)
   db.defaults({
@@ -20,7 +20,7 @@ function init(config, logger) {
     users: [
       {
         "username": "admin",
-        "password": "$2a$10$RLck3SiG4kDUR/Ln3kUd0uV4axJnuK3W7b36agHa817316UKbMP4K",
+        "password": "$2a$10$RLck3SiG4kDUR/Ln3kUd0uV4axJnuK3W7b36agHa817316UKbMP4K", // admin
         "email": "admin@domain.tld",
         "admin": true,
         "extensions": []

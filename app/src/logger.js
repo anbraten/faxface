@@ -10,21 +10,20 @@ function init(config) {
     level: 'info',
     format: winston.format.simple(),
     transports: [
-      new winston.transports.File({ filename: config.get('logger.files.error'), level: 'error' }),
       new winston.transports.File({
-        filename: config.get('logger.files.combined'),
+        filename: config.get('fax.folder') + config.get('logger.files.error'),
+        level: 'error',
+        handleExceptions: true
+      }),
+      new winston.transports.File({
+        filename: config.get('fax.folder') + config.get('logger.files.combined'),
         format: winston.format.combine(
             winston.format.timestamp({
               format: 'DD.MM.YYYY HH:mm'
             }),
             winston.format.json()
-        ),
-        handleExceptions: true
+        )
       })
-    ],
-    handleExceptions: true,
-    exceptionHandlers: [
-      new winston.transports.File({ filename: config.get('logger.files.fatal') })
     ]
   })
 

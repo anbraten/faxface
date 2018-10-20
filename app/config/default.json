@@ -29,15 +29,12 @@
     "from": "Fax <fax@domain.tld>"
   },
   "database": {
-    "file": "db.json"
+    "file": "/db.json"
   },
   "logger": {
     "files": {
-      "combined": "log/faxface",
-      "error": "log/error",
-      "fatal": "log/error",
-      "modems": "log/modems",
-      "hylafax": "log/hylafax"
+      "combined": "/log/faxface",
+      "error": "/log/error"
     }
   }
 }
