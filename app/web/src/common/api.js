@@ -26,6 +26,14 @@ export default {
     return Vue.axios.post(resource, params)
   },
 
+  upload (resource, params) {
+    return Vue.axios.post(resource, params, {
+      headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+  },
+
   update (resource, slug, params) {
     return Vue.axios.put(resource + '/' + slug, params)
   },

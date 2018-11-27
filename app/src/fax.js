@@ -17,7 +17,8 @@ module.exports = {
   'init': init,
   'getFax': getFax,
   'getFaxPdf': getFaxPdf,
-  'getFaxList': getFaxList
+  'getFaxList': getFaxList,
+  'sendFax': sendFax
 }
 
 function init(_config, _logger, _database, _cmd, _mail) {
@@ -111,7 +112,7 @@ function incomingFaxWatcher() {
           }).value()
 
         for (var user of users) {
-          console.log(user)
+          console.log(user.email)
           sendFaxMail(user.email, fax)
         }
       })
@@ -119,15 +120,18 @@ function incomingFaxWatcher() {
   })
 }
 
-function sendFax(file, extension, name, number, cb) {
-  //cmd.exec("/usr/bin/gs -q -dNOPAUSE -dBATCH -sDEVICE=tiffg4 -sPAPERSIZE=a4 -sOutputFile=$uploadfile {$_FILES["f"]["tmp_name"]} -c quit", $out, $ret);
+function sendFax(file, extension, destination, cb) {
   var modem = database.get('extensions').find({ extension: extension }).value()
-  //cmd.exec(config.get('hylafax.sendfax') + ' -n -E -l -s a4 -b 9600 -B 9600 -h ' + modem + '@localhost -d $dest $uploadfile');
+  var tiff = file + '.tiff'
 
-  fs.removeFile(file, (err) => {
-
-
-    cb(err, data)
+  cmd.exec("/usr/bin/gs -q -dNOPAUSE -dBATCH -sDEVICE=tiffg4 -sPAPERSIZE=a4 -sOutputFile=" + tiff + " " + file + "-c quit", (err) => {
+    if (err) { cb(err); return }
+    cmd.exec(config.get('hylafax.sendfax') + ' -n -E -l -s a4 -b 9600 -B 9600 -h ' + modem + '@localhost -d ' + destination + ' ' + file, (err) => {
+      if (err) { cb(err); return }
+      fs.unlink(file, (err) => {
+        cb(err)
+      })
+    })
   })
 }
 
@@ -145,5 +149,5 @@ function saveFax2Pdf(file, id) {
 function sendFaxMail(to, fax) {
   var subject = 'Neues Fax von ' + fax.sender
   var html = '<h1>Es gibt ein neues Fax.<h1><br /><p>Von: ' + fax.sender + '</p><br /><a href="' + config.get('web.public_url') + '/fax/' + fax.id + '">Download</a>'
-  mail.sendMail(to, subject, html)
+  mail(to, subject, html)
 }

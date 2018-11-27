@@ -31,7 +31,7 @@ function init () {
   faxserver = Faxserver.init(config, logger, database, command)
 
   // init fax
-  fax = Fax.init(config, logger, database, command, logger)
+  fax = Fax.init(config, logger, database, command, mail)
 
   // init web
   Web.init(config, logger, database, fax)

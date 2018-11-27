@@ -1,3 +1,4 @@
+app/config/development.json
 app/config/production.json
 app/log/
 app/node_modules/

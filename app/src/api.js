@@ -3,11 +3,13 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const path = require('path')
 const fs = require('fs')
+const multer  = require('multer')
 
 var config
 var logger
 var database
 var fax
+var upload
 
 // EXPORTS
 module.exports = {
@@ -19,6 +21,8 @@ function init(_config, _logger, _database, _fax) {
   logger = _logger
   database = _database
   fax = _fax
+
+  upload = multer({ dest: config.get('fax.folder') + '/uploads/' })
 
   return api()
 }
@@ -52,20 +56,15 @@ function api() {
     res.json(fax.getFaxList(req.params.list))
   })
 
-  router.post('/send', (req, res) => {
+  router.post('/send', upload.single('faxfile'), (req, res) => {
     // TODO: restrict to allowed extensions
-
+    var extension = req.body.extension
     var name = req.body.name
-    var number = req.body.number
+    var destination = req.body.destination
+    var faxfile = req.file.path
 
-    fs.readFile(req.files.faxfile.path, (err, data) => {
-      var faxfile = __dirname + '/tmp/' + path.basename(req.files.faxfile.path)
-
-      fs.writeFile(faxfile, data, (err) => {
-        fax.sendFax(faxfile, name, number, (err, data) => {
-          res.json({result: 'success'})
-        })
-      })
+    fax.sendFax(faxfile, extension, destination, (err) => {
+      res.json((err) ? {error: true, result: 'error'} : {result: 'success'})
     })
   })
 
